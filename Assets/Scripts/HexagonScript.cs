@@ -2,15 +2,48 @@ using UnityEngine;
 
 public class HexagonScript : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
+
+    private Rigidbody2D rb2d;
     void Start()
     {
-        Debug.Log("Hello World!");
+        rb2d= GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
+
     void Update()
     {
-        
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            rb2d.AddForce(Vector2.up * 300);
+        }
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            rb2d.AddForce(Vector2.right * 300);
+        }
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            rb2d.AddForce(Vector2.left * 300);
+        }
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            rb2d.AddTorque(300);
+        }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            rb2d.angularVelocity = 0;
+            rb2d.linearVelocity = Vector2.zero;
+        }
+
+
+        /* Д.З. Фізика. Основи
+ * - створити межі по всіх сторонах поля зору камери (ліво, право, верх, низ)
+ * - реалізувати фізичне управління об'єктом із задіянням 
+ *     всіх напрямів прикладання сили (ліво, право, верх)
+ * - при натисканні стрілки "вниз" додавати обертального моменту (Torque) тілу
+ * - при натисканні (відпусканні) ESC прибирати дію всіх сил
+ *    = присвоїти ноль для rb2d.angularVelocity
+ *    = присвоїти ноль-вектор для rb2d.linearVelocity
+ */
     }
 }
