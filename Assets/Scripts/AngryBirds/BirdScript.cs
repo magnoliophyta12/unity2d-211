@@ -16,7 +16,7 @@ public class BirdScript : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Space))
         {
-            rb2d.AddForce(1000 * arrow.right);
+            rb2d.AddForce(2000 * arrow.right);
         }
     }
 }
