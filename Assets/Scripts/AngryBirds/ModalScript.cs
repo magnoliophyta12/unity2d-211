@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ModalScript : MonoBehaviour
 {
@@ -8,50 +9,40 @@ public class ModalScript : MonoBehaviour
     private TMPro.TextMeshProUGUI titleTMP;
     [SerializeField]
     private TMPro.TextMeshProUGUI messageTMP;
+
     private static ModalScript instance;
 
     private string titleDefault;
     private string messageDefault;
-
-
+    private bool isGameOverModal = false;
 
     void Start()
     {
         instance = this;
-        titleDefault=titleTMP.text;
-        messageDefault=messageTMP.text;
-        //content = GameObject.Find("Content");
+        titleDefault = titleTMP.text;
+        messageDefault = messageTMP.text;
+
         if (content.activeInHierarchy)
         {
             Time.timeScale = 0.0f;
         }
-
     }
 
-
-    void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (content.activeInHierarchy)
-            {
-                content.SetActive(false);
-                Time.timeScale = 0.0f;
-            }
-            else
-            {
-                _Show();
-            }
-          /*  Time.timeScale = content.activeInHierarchy ? 1.0f : 0.0f;
-            content.SetActive(!content.activeInHierarchy);*/
-          
-        }
-    }
     public void OnResumeButtonClick()
+{
+    if (isGameOverModal)
+    {
+        Time.timeScale = 1.0f;
+        isGameOverModal = false;
+        UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
+    }
+    else
     {
         content.SetActive(false);
         Time.timeScale = 1.0f;
     }
+}
+
     public void OnExitButtonClick()
     {
 #if UNITY_EDITOR
@@ -59,20 +50,19 @@ public class ModalScript : MonoBehaviour
 #endif
         Application.Quit();
     }
-    private void _Show(string title=null,string message=null)
+
+    private void _Show(string title = null, string message = null, bool isGameOver = false)
     {
+        isGameOverModal = isGameOver;
         Time.timeScale = 0.0f;
         content.SetActive(true);
 
-        if(title!=null)titleTMP.text = title;
-        else titleTMP.text = titleDefault;
-
-        if (message != null) messageTMP.text = message;
-        else messageTMP.text = messageDefault;
-
+        titleTMP.text = title ?? titleDefault;
+        messageTMP.text = message ?? messageDefault;
     }
-    public static void ShowModal(string title = null, string message = null)
+
+    public static void ShowModal(string title = null, string message = null, bool isGameOver = false)
     {
-        instance._Show(title,message);
+        instance._Show(title, message, isGameOver);
     }
 }
