@@ -1115,7 +1115,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8192923224553822199, guid: 4f7c76f4aee4a2e4a807c69311d23562, type: 3}
       propertyPath: triesCount
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8192923224553822199, guid: 4f7c76f4aee4a2e4a807c69311d23562, type: 3}
       propertyPath: shotTimeout

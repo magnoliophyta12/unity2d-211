@@ -17,7 +17,6 @@ public class ModalScript : MonoBehaviour
 
     private string titleDefault;
     private string messageDefault;
-    private bool isGameOverModal = false;
 
     void Start()
     {
@@ -89,7 +88,14 @@ public class ModalScript : MonoBehaviour
 
         titleTMP.text = title ?? titleDefault;
         messageTMP.text = message ?? messageDefault;
-        resumeBtnText.text = GameState.isLevelFailed ? "онбрнпхрх" : "опнднбфхрх";
+        if (GameState.isLevelFailed)
+        {
+            resumeBtnText.text = "онбрнпхрх";
+        }
+        if (GameState.isLevelCompleted)
+        {
+            resumeBtnText.text = GameState.sceneIndex == 0 ? "мюмнбн" : "опнднбфхрх";
+        }
     }
 
     public static void ShowModal(string title = null, string message = null)
