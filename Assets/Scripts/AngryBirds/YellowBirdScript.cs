@@ -20,7 +20,7 @@ public class YellowBirdScript : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space) && !hasDashed)
         {
-            float forceFactor = 1000.0f;
+            float forceFactor = 2000.0f;
             if (forceScript != null) 
             {
                 forceFactor *= Time.timeScale * (forceScript.forceFactor + 0.5f);
@@ -41,7 +41,7 @@ public class YellowBirdScript : MonoBehaviour
     private void Dash()
     {
         hasDashed = true; 
-        float dashForce = 1000.0f * dashForceMultiplier;
+        float dashForce = 2000.0f * dashForceMultiplier;
 
         rb2d.linearVelocity = Vector2.zero; 
         rb2d.AddForce(dashForce * arrow.right, ForceMode2D.Impulse); 

@@ -23,9 +23,9 @@ public class ClockScript : MonoBehaviour
 
         clock.text = $"{hours:00}:{minutes:00}:{seconds:00}.{tenths}";
 
-        if (gameTime >= 10.0f)
+       /* if (gameTime >= 10.0f)
         {
             ModalScript.ShowModal("Кінець гри", "Ви не встигли. Для перезапуску гри нажміть \"Продовжити\"", true);
-        }
+        }*/
     }
 }

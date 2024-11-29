@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class ModalScript : MonoBehaviour
 {
@@ -9,6 +10,8 @@ public class ModalScript : MonoBehaviour
     private TMPro.TextMeshProUGUI titleTMP;
     [SerializeField]
     private TMPro.TextMeshProUGUI messageTMP;
+    [SerializeField]
+    private Text resumeBtnText;
 
     private static ModalScript instance;
 
@@ -28,20 +31,48 @@ public class ModalScript : MonoBehaviour
         }
     }
 
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (content.activeInHierarchy)
+            {
+                content.SetActive(false);
+                Time.timeScale = 1.0f;
+            }
+            else
+            {
+                _Show();
+            }
+        }
+    }
+
     public void OnResumeButtonClick()
-{
-    if (isGameOverModal)
     {
         Time.timeScale = 1.0f;
-        isGameOverModal = false;
-        UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
-    }
-    else
-    {
         content.SetActive(false);
-        Time.timeScale = 1.0f;
+        if (GameState.isLevelFailed)
+        {
+            SceneManager.LoadScene(GameState.sceneIndex);
+        }
+        else if (GameState.isLevelCompleted)
+        {
+            Time.timeScale = 1.0f;
+
+            GameState.sceneIndex += 1;
+
+            if (GameState.sceneIndex >= SceneManager.sceneCountInBuildSettings)
+            {
+                GameState.sceneIndex = 0; 
+            }
+
+            SceneManager.LoadScene(GameState.sceneIndex);
+        }
+        else
+        {
+            content.SetActive(false);
+        }
     }
-}
 
     public void OnExitButtonClick()
     {
@@ -51,18 +82,18 @@ public class ModalScript : MonoBehaviour
         Application.Quit();
     }
 
-    private void _Show(string title = null, string message = null, bool isGameOver = false)
+    private void _Show(string title = null, string message = null)
     {
-        isGameOverModal = isGameOver;
         Time.timeScale = 0.0f;
         content.SetActive(true);
 
         titleTMP.text = title ?? titleDefault;
         messageTMP.text = message ?? messageDefault;
+        resumeBtnText.text = GameState.isLevelFailed ? "онбрнпхрх" : "опнднбфхрх";
     }
 
-    public static void ShowModal(string title = null, string message = null, bool isGameOver = false)
+    public static void ShowModal(string title = null, string message = null)
     {
-        instance._Show(title, message, isGameOver);
+        instance._Show(title, message);
     }
 }

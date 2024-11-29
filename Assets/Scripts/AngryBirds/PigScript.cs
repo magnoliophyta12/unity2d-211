@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PigScript : MonoBehaviour
@@ -15,9 +16,11 @@ public class PigScript : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.name == "Bird")
+        if (collision.gameObject.CompareTag("PigDestroy"))
         {
-            ModalScript.ShowModal("ЗНИЩЕНО", "-1 супротивник");
+            //ModalScript.ShowModal("ЗНИЩЕНО", "-1 супротивник");
+            GameObject.Destroy(this.gameObject);
+            GameState.needRecalculatePigs = true;
         }
     }
 }
